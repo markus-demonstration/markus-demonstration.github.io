@@ -18,6 +18,10 @@
   .video { display:flex; flex-direction:column; align-items:center; gap:.6rem; }
   video { width:100%; max-width:22rem; aspect-ratio:9/16; border-radius:14px; background:#000; border:1px solid var(--line); }
   .cap { font-size:.85rem; color:var(--mute); text-align:center; max-width:30rem; }
+  .opt { font-size:.9rem; text-align:center; max-width:30rem; margin:.2rem 0 0; }
+  details { width:100%; max-width:22rem; margin-top:.4rem; }
+  summary { cursor:pointer; color:var(--gold); text-align:center; padding:.4rem; }
+  details video { margin-top:.5rem; }
   .sheet { width:100%; border-radius:10px; border:1px solid var(--line); margin-top:.8rem; }
   ul.cards { list-style:none; padding:0; margin:0; display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); }
   ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:.75rem .9rem; }
@@ -44,7 +48,12 @@
   <h2>Förhandsvisning (9:16)</h2>
   <div class="video">
     <video src="preview.mp4" poster="poster.jpg" controls playsinline preload="metadata"></video>
-    <p class="cap">Platshållarkort, egen exempeltext och egengenererat syntljud. Texten landar på takten, nyckelord i guld. 20 s video, renderad på ca 11–14 s.</p>
+    <p class="cap">Liten text, så att bilden står i fokus. Platshållarkort, egen exempeltext och egengenererat syntljud; texten landar på takten, nyckelord i guld. 20 s video, renderad på ca 11 s.</p>
+    <p class="opt">Val per paket: <b>textstorlek liten/medel/stor</b> och <b>säkra marginaler för TikTok/Reels/Shorts</b> (texten håller sig borta från knappar och bildtext).</p>
+    <details>
+      <summary>Samma demo med stor text</summary>
+      <video src="preview-stor.mp4" poster="poster-stor.jpg" controls playsinline preload="none"></video>
+    </details>
   </div>
   <img class="sheet" src="contact-sheet.jpg" alt="Kontaktark: fyra platshållarkort med textrader och en slutskylt" loading="lazy">
 
@@ -57,7 +66,7 @@
     <li><b>Bildbeskrivning (moondream)</b><em>≈ 5 s per bild</em><br><small>lokalt, inga uppladdningar</small></li>
     <li><b>Hämtning (yt-dlp)</b><em>video/ljud till lokal analys</em><br><small>&nbsp;</small></li>
     <li><b>Videoanalys (ffmpeg)</b><em>klipptakt + kontaktark</em><br><small>hur ofta det klipps, översikt per scen</small></li>
-    <li><b>9:16-förhandsvisning med text i takt</b><em>20 s video på ≈ 11 s</em><br><small>beat-detektering, guldnyckelord, slutskylt</small></li>
+    <li><b>9:16-förhandsvisning med text i takt</b><em>20 s video på ≈ 11 s</em><br><small>beat-detektering, guldnyckelord, slutskylt, textstorlek, säkra marginaler</small></li>
     <li><b>Paket-linter</b><em>kontroll per statusnivå</em><br><small>idé → förberedd → förhandsvisad → klar</small></li>
     <li><b>Nattkö</b><em>analysjobb körs automatiskt</em><br><small>resultat klara till morgonen</small></li>
   </ul>
