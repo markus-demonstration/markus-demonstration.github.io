@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Lokal mediaverktygslåda · demo</title>
+<style>
+  :root { color-scheme: dark; --bg:#14110d; --card:#1f1a14; --line:#3a3026; --gold:#e8b64c; --text:#f3ece2; --mute:#b9ad9c; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; line-height:1.55; }
+  main { max-width:44rem; margin:0 auto; padding:1.5rem 1rem 3rem; }
+  h1 { font-size:1.9rem; line-height:1.2; margin:.5rem 0 .75rem; }
+  h1 span { color:var(--gold); }
+  h2 { font-size:1.2rem; margin:2.2rem 0 .8rem; color:var(--gold); letter-spacing:.02em; }
+  p { margin:.4rem 0; }
+  .intro p { color:var(--mute); }
+  .video { display:flex; flex-direction:column; align-items:center; gap:.6rem; }
+  video { width:100%; max-width:22rem; aspect-ratio:9/16; border-radius:14px; background:#000; border:1px solid var(--line); }
+  .cap { font-size:.85rem; color:var(--mute); text-align:center; max-width:30rem; }
+  .sheet { width:100%; border-radius:10px; border:1px solid var(--line); margin-top:.8rem; }
+  ul.cards { list-style:none; padding:0; margin:0; display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); }
+  ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:.75rem .9rem; }
+  ul.cards b { display:block; margin-bottom:.15rem; }
+  ul.cards em { font-style:normal; color:var(--gold); font-variant-numeric:tabular-nums; }
+  ul.cards small { color:var(--mute); }
+  .facts { margin-top:.8rem; font-size:.9rem; color:var(--mute); }
+  ol.flow { padding-left:1.2rem; margin:0; }
+  ol.flow li { margin:.35rem 0; }
+  a { color:var(--gold); }
+  footer { margin-top:2.5rem; padding-top:1rem; border-top:1px solid var(--line); font-size:.85rem; color:var(--mute); }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="../">← Startsida</a></p>
+  <h1>Lokal mediaverktygslåda för <span>kreatörssamarbete</span></h1>
+  <div class="intro">
+    <p>En verktygslåda som körs helt lokalt, utan API-nycklar eller betaltjänster.</p>
+    <p>Byggd för ett samarbete med en musikskapare: analys, transkribering och förhandsvisning av idéer.</p>
+    <p>Allt nedan är uppmätt idag på en vanlig maskin med 8 kärnor och ingen GPU.</p>
+  </div>
+
+  <h2>Förhandsvisning (9:16)</h2>
+  <div class="video">
+    <video src="preview.mp4" poster="poster.jpg" controls playsinline preload="metadata"></video>
+    <p class="cap">Platshållarkort, egen exempeltext och egengenererat syntljud. Texten landar på takten, nyckelord i guld. 20 s video, renderad på ca 11–14 s.</p>
+  </div>
+  <img class="sheet" src="contact-sheet.jpg" alt="Kontaktark: fyra platshållarkort med textrader och en slutskylt" loading="lazy">
+
+  <h2>Verktyg och mätvärden</h2>
+  <ul class="cards">
+    <li><b>Transkribering (whisper.cpp)</b><em>small ≈ 0,37× realtid · medium ≈ 1× realtid</em><br><small>på CPU</small></li>
+    <li><b>OCR (Tesseract eng+swe)</b><em>≈ 0,7 s per bild</em><br><small>text ur skärmbilder och affischer</small></li>
+    <li><b>Röstseparation (demucs)</b><em>sång / komp</em><br><small>stämmor för analys och timing</small></li>
+    <li><b>Lokal språkmodell (Ollama qwen2.5:1.5b)</b><em>≈ 22 token/s</em><br><small>sammanfattning och taggning</small></li>
+    <li><b>Bildbeskrivning (moondream)</b><em>≈ 5 s per bild</em><br><small>lokalt, inga uppladdningar</small></li>
+    <li><b>Hämtning (yt-dlp)</b><em>video/ljud till lokal analys</em><br><small>&nbsp;</small></li>
+    <li><b>Videoanalys (ffmpeg)</b><em>klipptakt + kontaktark</em><br><small>hur ofta det klipps, översikt per scen</small></li>
+    <li><b>9:16-förhandsvisning med text i takt</b><em>20 s video på ≈ 11 s</em><br><small>beat-detektering, guldnyckelord, slutskylt</small></li>
+    <li><b>Paket-linter</b><em>kontroll per statusnivå</em><br><small>idé → förberedd → förhandsvisad → klar</small></li>
+    <li><b>Nattkö</b><em>analysjobb körs automatiskt</em><br><small>resultat klara till morgonen</small></li>
+  </ul>
+  <p class="facts">Högsta minnesanvändning: 2,55 GB RAM. Ingen GPU. Inga betaltjänster.</p>
+
+  <h2>Arbetsflöde</h2>
+  <ol class="flow">
+    <li><b>Gemensamt repo</b> där idéer, paket och analyser samlas.</li>
+    <li><b>Överlämningsrader</b>: varje steg avslutas med en kort rad om vad som är gjort och vad som väntar.</li>
+    <li><b>Kvalitetsåterkoppling</b> med enkla poäng på förhandsvisningar, så nästa version blir bättre.</li>
+    <li><b>Gratis lokal förbearbetning först</b>: analys och förhandsvisning innan någon betald generering.</li>
+    <li><b>Ägaren bestämmer</b> alla betalda anrop och all publicering.</li>
+    <li><b>IP-taggar respekteras</b>: varje paket anger vem som äger materialet.</li>
+  </ol>
+
+  <footer>
+    <p>Platshållarinnehåll. Inga riktiga verk publiceras utan ägarens godkännande.</p>
+    <p>2026-10-04</p>
+  </footer>
+</main>
+</body>
+</html>
